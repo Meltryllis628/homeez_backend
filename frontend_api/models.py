@@ -30,8 +30,8 @@ class FurnishingRequest(models.Model):
     expire_time = models.DateTimeField()
     # user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    input_file_image = models.FileField(upload_to=upload_input_path)
-    input_file_json = models.FileField(upload_to=upload_input_path)
+    input_file_image = models.FileField(upload_to=upload_input_path, null=True, blank=True)
+    input_file_json = models.FileField(upload_to=upload_input_path, null=True, blank=True)
     output_file_image = models.FileField(upload_to=upload_output_path, null=True, blank=True)
     output_file_json = models.FileField(upload_to=upload_output_path, null=True, blank=True)
 
