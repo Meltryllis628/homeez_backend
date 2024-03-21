@@ -24,6 +24,7 @@ def upload_output_path(instance, filename):
 
 # Create your models here.
 
+
 class FurnishingRequest(models.Model):
     request_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     request_time = models.DateTimeField(auto_now_add=True)

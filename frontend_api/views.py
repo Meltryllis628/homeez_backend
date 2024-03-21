@@ -70,3 +70,6 @@ class FurnishingRequestDownloadJsonView(APIView):
             return file_response_json
         except:
             return Response("Request not found or not accomplished.",status=status.HTTP_404_NOT_FOUND)
+
+class FurnishingRequestDownloadRoomJsonView(APIView):
+    pass
