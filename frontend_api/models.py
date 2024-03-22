@@ -52,5 +52,9 @@ def delete_related_files(sender, instance, **kwargs):
 
 @receiver(post_save, sender=FurnishingRequest)
 def generate_result(sender, instance, **kwargs):
-    input_json = json.load(open(instance.input_file_json.path))
+    try:
+        input_json = json.load(open(instance.input_file_json.path))
+        pass
+    except Exception as e:
+        pass
     

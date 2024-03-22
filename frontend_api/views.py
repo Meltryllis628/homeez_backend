@@ -39,13 +39,10 @@ class FurnishingRequestJsonGetView(APIView):
     def post(self, request, format=None):
         serializer = FurnishingRequestJsonSerializer(data=request.data)
         if serializer.is_valid():
-            request_time = datetime.datetime.now()
-            expire_time = request_time + datetime.timedelta(days=7)
-            serializer.validated_data['expire_time'] = expire_time
             saved_obj = serializer.save()
             response_json = {
                 "request_id": saved_obj.request_id,
-                "expire_time": expire_time
+                "expire_time": saved_obj.expire_time
             }
             return Response(response_json, status=status.HTTP_201_CREATED)
         else:
