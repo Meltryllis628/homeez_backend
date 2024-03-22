@@ -39,12 +39,9 @@ class FurnishingRequestJsonGetView(APIView):
     def post(self, request, format=None):
         serializer = FurnishingRequestJsonSerializer(data=request.data)
         if serializer.is_valid():
-            with open("tmp.json", 'w') as f:
-                json.dump(serializer.validated_data['input_file_json'], f)
             request_time = datetime.datetime.now()
             expire_time = request_time + datetime.timedelta(days=7)
             serializer.validated_data['expire_time'] = expire_time
-            serializer.validated_data['input_file_json'] = "tmp.json"
             saved_obj = serializer.save()
             response_json = {
                 "request_id": saved_obj.request_id,
@@ -86,6 +83,16 @@ class FurnishingRequestDownloadJsonView(APIView):
         try:
             request = FurnishingRequest.objects.get(request_id=request_id)
             file_path_json = request.output_file_json.path
+            file_response_json = FileResponse(open(file_path_json, 'rb'))
+            return file_response_json
+        except:
+            return Response("Request not found or not accomplished.",status=status.HTTP_404_NOT_FOUND)
+
+class FurnishingRequestDownloadInputJsonView(APIView):
+    def get(self, request, request_id, format=None):
+        try:
+            request = FurnishingRequest.objects.get(request_id=request_id)
+            file_path_json = request.input_file_json.path
             file_response_json = FileResponse(open(file_path_json, 'rb'))
             return file_response_json
         except:
