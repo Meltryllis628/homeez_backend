@@ -39,11 +39,11 @@ class FurnishingRequestJsonGetView(APIView):
     def post(self, request, format=None):
         serializer = FurnishingRequestJsonSerializer(data=request.data)
         if serializer.is_valid():
-            generated_json_file = json.dump(serializer.validated_data['input_file_json'], open(f"uploads/input/{serializer.validated_data['request_id']}.json"), 'w')
+            generated_json_file = json.dump(serializer.validated_data['input_file_json'], open(f"uploads/tmp.json"), 'w')
             request_time = datetime.datetime.now()
             expire_time = request_time + datetime.timedelta(days=7)
             serializer.validated_data['expire_time'] = expire_time
-            serializer.validated_data['input_file_json'] = generated_json_file
+            serializer.validated_data['input_file_json'] = open(f"uploads/tmp.json")
             saved_obj = serializer.save()
             response_json = {
                 "request_id": saved_obj.request_id,
