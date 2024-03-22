@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import FurnishingRequest
 import os
 import json
+import datetime
 class FurnishingRequestSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -14,6 +15,9 @@ class FurnishingRequestJsonSerializer(serializers.ModelSerializer):
         model = FurnishingRequest
         fields =  ['json_data']
     def create(self, validated_data):
+        request_time = datetime.datetime.now()
+        expire_time = request_time + datetime.timedelta(days=7)
+        validated_data['expire_time'] = expire_time
         json_obj = validated_data.pop('json_data')
         instance = FurnishingRequest.objects.create(**validated_data)
         file_name = instance.request_id
