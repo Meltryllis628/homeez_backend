@@ -1,9 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.dispatch import receiver
-from django.db.models.signals import pre_delete
+from django.db.models.signals import pre_delete, post_save
 import uuid
 import os
+import json
 
 def upload_input_path(instance, filename):
     ext = filename.split('.')[-1]
@@ -39,7 +40,6 @@ class FurnishingRequest(models.Model):
 
 @receiver(pre_delete, sender=FurnishingRequest)
 def delete_related_files(sender, instance, **kwargs):
-
     # 获取对象中包含的文件字段，并删除文件
     file_fields = [field for field in instance._meta.get_fields() if isinstance(field, models.FileField)]
     for field in file_fields:
@@ -48,3 +48,9 @@ def delete_related_files(sender, instance, **kwargs):
         file_path = getattr(instance, field.name).path
         if os.path.isfile(file_path):
             os.remove(file_path)
+
+
+@receiver(post_save, sender=FurnishingRequest)
+def generate_result(sender, instance, **kwargs):
+    input_json = json.load(open(instance.input_file_json.path))
+    

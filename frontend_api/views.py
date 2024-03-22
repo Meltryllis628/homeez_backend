@@ -3,10 +3,11 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.http import FileResponse
 from rest_framework import status
+import json
 
 import datetime
 
-from .serializer import FurnishingRequestSerializer, FurnishingRequestGetSerializer
+from .serializer import FurnishingRequestSerializer, FurnishingRequestGetSerializer, FurnishingRequestJsonSerializer
 from .models import FurnishingRequest
 
 # Create your views here.
@@ -34,6 +35,24 @@ class FurnishingRequestView(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
+class FurnishingRequestJsonGetView(APIView):
+    def post(self, request, format=None):
+        serializer = FurnishingRequestJsonSerializer(data=request.data)
+        if serializer.is_valid():
+            generated_json_file = json.dumps(serializer.validated_data['json_field'])
+            request_time = datetime.datetime.now()
+            expire_time = request_time + datetime.timedelta(days=7)
+            serializer.validated_data['expire_time'] = expire_time
+            serializer.validated_data['input_file_json'] = generated_json_file
+            saved_obj = serializer.save()
+            response_json = {
+                "request_id": saved_obj.request_id,
+                "expire_time": expire_time
+            }
+            return Response(response_json, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 class FurnishingRequestDetailView(APIView):
     def get(self, request, request_id, format=None):
         try:
