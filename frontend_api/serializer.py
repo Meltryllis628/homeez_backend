@@ -30,7 +30,7 @@ class FurnishingRequestJsonSerializer(serializers.ModelSerializer):
             json.dump(json_obj, f)
         with open(file_path, 'r') as f:
             django_file = File(f)
-        instance.input_file_json.save(file_path, django_file, save=True)
+            instance.input_file_json.save(file_path, django_file, save=True)
         instance.save()
         return instance
 
