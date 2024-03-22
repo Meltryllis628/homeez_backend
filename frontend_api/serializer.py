@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import FurnishingRequest
+from django.core.files import File
 import os
 import json
 import datetime
@@ -27,7 +28,9 @@ class FurnishingRequestJsonSerializer(serializers.ModelSerializer):
         file_path = os.path.join(path, f"{file_name}.json")
         with open(file_path, 'w') as f:
             json.dump(json_obj, f)
-        instance.input_file_json = file_path
+        with open(file_path, 'r') as f:
+            django_file = File(f)
+        instance.input_file_json.save(file_path, django_file, save=True)
         instance.save()
         return instance
 
