@@ -8,10 +8,10 @@ class FurnishingRequestSerializer(serializers.ModelSerializer):
         fields =  ['input_file_image', 'input_file_json']
 
 class FurnishingRequestJsonSerializer(serializers.ModelSerializer):
-    json_field = serializers.JSONField()
+    input_file_json = serializers.JSONField()
     class Meta:
         model = FurnishingRequest
-        fields =  ['json_field']
+        fields =  ['input_file_json']
 
 class FurnishingRequestGetSerializer(serializers.ModelSerializer):
     class Meta:
