@@ -44,7 +44,7 @@ class FurnishingRequestJsonGetView(APIView):
             request_time = datetime.datetime.now()
             expire_time = request_time + datetime.timedelta(days=7)
             serializer.validated_data['expire_time'] = expire_time
-            serializer.validated_data['input_file_json'] = open(f"tmp.json")
+            serializer.validated_data['input_file_json'] = "tmp.json"
             saved_obj = serializer.save()
             response_json = {
                 "request_id": saved_obj.request_id,
