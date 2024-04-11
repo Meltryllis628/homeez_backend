@@ -7,7 +7,7 @@ import datetime
 import threading
 import os
 import sys 
-from running import run_generation
+from .running import run_generation
 class FurnishingRequestSerializer(serializers.ModelSerializer):
 
     class Meta:
