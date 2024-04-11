@@ -3,3 +3,4 @@ db.conf
 uploads/*
 *.ipynb
 /frontend_api/generator
+*.pth
