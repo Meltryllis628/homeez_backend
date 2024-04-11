@@ -6,6 +6,8 @@ import json
 import datetime
 import threading
 import os
+import sys 
+sys.path.append("generator")
 from generator.running import run_generation
 class FurnishingRequestSerializer(serializers.ModelSerializer):
 
