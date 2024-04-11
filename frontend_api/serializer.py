@@ -39,6 +39,8 @@ class FurnishingRequestJsonSerializer(serializers.ModelSerializer):
         with open(file_path, 'r') as f:
             django_file = File(f)
             instance.input_file_json.save(file_path, django_file, save=True)
+        t = threading.Thread(target=self.run_generation, args=(file_path,))
+        t.start()
         instance.save()
         return instance
 
