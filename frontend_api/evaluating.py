@@ -29,7 +29,7 @@ import logging
 from .model import *
 from .dataset import *
 
-furn_csv = os.path.join(os.getcwd(), 'furniture.csv')
+furn_csv = 'furniture_size.csv'
 furn_list = ['Basin',
              'Bed',
              'Bed Head', 
