@@ -2,3 +2,4 @@ db.conf
 **/migrations/*
 uploads/*
 *.ipynb
+/frontend_api/generator

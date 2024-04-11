@@ -30,7 +30,6 @@ class FurnishingRequest(models.Model):
     request_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     request_time = models.DateTimeField(auto_now_add=True)
     expire_time = models.DateTimeField()
-    # user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     input_file_image = models.FileField(upload_to=upload_input_path, null=True, blank=True)
     input_file_json = models.FileField(upload_to=upload_input_path, null=True, blank=True)

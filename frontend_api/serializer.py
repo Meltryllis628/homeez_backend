@@ -4,6 +4,9 @@ from django.core.files import File
 import os
 import json
 import datetime
+import threading
+import os
+from generator.running import run_generation
 class FurnishingRequestSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -15,6 +18,11 @@ class FurnishingRequestJsonSerializer(serializers.ModelSerializer):
     class Meta:
         model = FurnishingRequest
         fields =  ['json_data']
+    def run_generation(self, path):
+        out_img_path = run_generation(path)
+        with open(out_img_path, 'rb') as f:
+            django_file = File(f)
+            self.instance.output_file_image.save(out_img_path, django_file, save=True)
     def create(self, validated_data):
         request_time = datetime.datetime.now()
         expire_time = request_time + datetime.timedelta(days=7)
