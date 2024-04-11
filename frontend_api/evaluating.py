@@ -9,6 +9,7 @@ import numpy as np
 import math
 import re
 import random
+import os
 
 from PIL import Image, ImageDraw
 import matplotlib.pyplot as plt
@@ -28,7 +29,7 @@ import logging
 from .model import *
 from .dataset import *
 
-furn_csv = '.furniture_size.csv'
+furn_csv = os.path.join(os.getcwd(), 'furniture.csv')
 furn_list = ['Basin',
              'Bed',
              'Bed Head', 
