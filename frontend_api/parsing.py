@@ -233,7 +233,10 @@ def parse_input_json(input_file_path, furniture_list = furniture_list, furniture
     raw_json_object = json.load(open(input_file_path))
     rooms = raw_json_object['rooms']
     num_rooms = {}
-    output_dir = Path(input_file_name)
+    output_root_dir = "outputs"
+    if not os.path.exists(output_root_dir):
+        os.makedirs(output_root_dir)
+    output_dir = os.path.join(output_root_dir, input_file_name)
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
     json_output_dir = os.path.join(output_dir, 'json_raw')

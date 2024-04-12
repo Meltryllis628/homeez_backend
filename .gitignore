@@ -4,3 +4,5 @@ uploads/*
 *.ipynb
 /frontend_api/generator
 *.pth
+*/__pycache__/*
+outputs/*

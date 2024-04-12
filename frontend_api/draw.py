@@ -327,8 +327,8 @@ def draw_room(filepath, imgpath):
         else:
             # draw the furniture use large rectangle
             cv2.rectangle(img, (x, y), (x+w, y+h), (0,0,0), 1)
-        furniture_new['x'] =x + w//2
-        furniture_new['y'] =y + h//2
+        furniture_new['x'] = int(x + w//2)
+        furniture_new['y'] = int(y + h//2)
     data['furniture'] = furnitures_new
     json.dump(data, open(filepath, 'w'))
     file_name = os.path.basename(filepath).split('.')[0] + '.png'
