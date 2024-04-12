@@ -1,6 +1,6 @@
 from .parsing import parse_input_json,generate_furniture
 from .evaluating import generate_outputs
-from draw import draw_room
+from .draw import draw_room
 import os
 import zipfile
 
@@ -15,7 +15,6 @@ def run_generation(path):
         os.makedirs(json_dir)
     for file in os.listdir(raw_jsons_dir):
         if file.endswith('.json'):
-            print('Generating furniture for',file)
             generate_furniture(os.path.join(raw_jsons_dir,file),json_dir,img_dir)
             file_name = file.split('.')[0]
     input_jsons = [os.path.join(json_dir,file) for file in os.listdir(json_dir) if file.endswith('.json')]
